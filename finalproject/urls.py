@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from dorm.views import (
     signup_api,
     login_api,
@@ -31,6 +31,7 @@ urlpatterns = [
     path('api/posts/<int:post_id>/comments/', comments_api, name='comments_api'),
     path('api/inquiries/', inquiries_api, name='inquiries_api'),
     path('api/inquiries/<int:pk>/', inquiry_detail_api, name='inquiry_detail_api'),
+    path('', include('web.urls')),
 ]
 
 if settings.DEBUG:

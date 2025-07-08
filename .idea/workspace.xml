@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1d6bfb6-d4da-4a90-a673-9f5f5f57fb08" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/FinalProject.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dorm/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dorm/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dorm/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dorm/permissions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dorm/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dorm/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dorm/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dorm/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/finalproject/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/finalproject/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/finalproject/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/finalproject/wsgi.py" afterDir="false" />
+    <list default="true" id="c1d6bfb6-d4da-4a90-a673-9f5f5f57fb08" name="변경" comment="final">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finalproject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalproject/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +16,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "minyoung521"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/minyoung521/fpj.git",
+    "accountId": "a3744735-d0f1-497a-ba34-80b91fe400f0"
+  }
+}]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 2
 }]]></component>
@@ -65,6 +65,19 @@
       <option name="presentableId" value="Default" />
       <updated>1751937382914</updated>
     </task>
+    <task id="LOCAL-00001" summary="final">
+      <option name="closed" value="true" />
+      <created>1751937796786</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1751937796786</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="final" />
+    <option name="LAST_COMMIT_MESSAGE" value="final" />
   </component>
 </project>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c1d6bfb6-d4da-4a90-a673-9f5f5f57fb08" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/FinalProject.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dorm/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dorm/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dorm/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dorm/permissions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dorm/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dorm/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dorm/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dorm/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finalproject/asgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finalproject/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finalproject/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finalproject/wsgi.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="2zZT1eQaGSyAoD3bquZC8vKvFja" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\FinalProject\dorm" />
+      <recent name="C:\FinalProject\finalproject" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-4f4e415b4190-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.26053.29" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="c1d6bfb6-d4da-4a90-a673-9f5f5f57fb08" name="변경" comment="" />
+      <created>1751937382914</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1751937382914</updated>
+    </task>
+    <servers />
+  </component>
+</project>

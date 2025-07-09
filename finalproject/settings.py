@@ -18,7 +18,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'dorm',
-    'web',
 ]
 
 MIDDLEWARE = [
@@ -37,7 +36,6 @@ ROOT_URLCONF = 'finalproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'templates' ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -51,11 +49,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'finalproject.wsgi.application'
 
+# Database configuration: MariaDB as default, SQLite as alias for dumping
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Dormdb',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': '43.202.118.147',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    },
+    'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
 }
 
 LOGGING = {
@@ -93,7 +103,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

@@ -289,3 +289,68 @@ def inquiry_detail_api(request, pk):
             answer.save()
         return Response({'success': True, 'answer': InquiryAnswerSerializer(answer).data})
     return Response({'success': False, 'error': serializer.errors}, status=400)
+    
+    
+    
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def dorm_applications_list_api(request):
+    if not request.user.is_staff:
+        return JsonResponse({'success': False, 'error': 'Permission denied.'}, status=403)
+    dorms = Dorm.objects.all().order_by('-id')
+    data = DormSerializer(dorms, many=True).data
+    return JsonResponse({'success': True, 'dorms': data})
+
+
+@api_view(['GET', 'PATCH', 'DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def dorm_application_detail_api(request, pk):
+    try:
+        dorm = Dorm.objects.get(pk=pk)
+    except Dorm.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Dorm application not found.'}, status=404)
+
+    if not request.user.is_staff:
+        return JsonResponse({'success': False, 'error': 'Permission denied.'}, status=403)
+
+    if request.method == 'GET':
+        return JsonResponse({'success': True, 'application': DormSerializer(dorm).data})
+
+    elif request.method == 'PATCH':
+        building = request.data.get('building_name')
+        room = request.data.get('r_number')
+        position = request.data.get('position')
+
+        updated = False
+
+        if building is not None:
+            dorm.building_name = building
+            updated = True
+
+        if room is not None:
+            try:
+                dorm.r_number = int(room)
+            except ValueError:
+                return JsonResponse({'success': False, 'error': 'Invalid room number'}, status=400)
+            updated = True
+
+        if position is not None:
+            try:
+                dorm.position = int(position)
+            except ValueError:
+                return JsonResponse({'success': False, 'error': 'Invalid position'}, status=400)
+            updated = True
+
+        if updated:
+            dorm.save()
+            return JsonResponse({'success': True, 'application': DormSerializer(dorm).data})
+        else:
+            return JsonResponse({'success': False, 'error': 'No fields to update.'}, status=400)
+
+    elif request.method == 'DELETE':
+        dorm.delete()
+        return JsonResponse({'success': True, 'message': 'Dorm application deleted.'})
+

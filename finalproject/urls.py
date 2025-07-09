@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from dorm.views import (
     signup_api,
     login_api,
@@ -13,6 +13,8 @@ from dorm.views import (
     comments_api,
     inquiries_api,
     inquiry_detail_api,
+    dorm_applications_list_api,
+    dorm_application_detail_api,
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -31,7 +33,8 @@ urlpatterns = [
     path('api/posts/<int:post_id>/comments/', comments_api, name='comments_api'),
     path('api/inquiries/', inquiries_api, name='inquiries_api'),
     path('api/inquiries/<int:pk>/', inquiry_detail_api, name='inquiry_detail_api'),
-    path('', include('web.urls')),
+    path('api/dorm-applications/', dorm_applications_list_api, name='dorm_applications_list_api'),
+    path('api/dorm-applications/<int:pk>/', dorm_application_detail_api, name='dorm_application_detail_api'),
 ]
 
 if settings.DEBUG:

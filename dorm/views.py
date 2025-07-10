@@ -147,21 +147,23 @@ def apply_dorm_api(request):
     name = request.data.get('name')
     stud = request.data.get('student_number')
     gender = request.data.get('gender')
-    content = request.data.get('content')
-    if not all([name, stud, gender, content]):
+    content = request.data.get('content', '')
+    if not all([name, stud, gender]):
         return JsonResponse(
-            {'success': False, 'error': 'Name, student number, gender and content are required.'},
+            {'success': False, 'error': 'Name, student number and gender are required.'},
             status=400
         )
     if Dorm.objects.filter(user=user).exists():
         return JsonResponse({'success': False, 'error': 'Dorm application already exists.'}, status=400)
+
     dorm = Dorm.objects.create(
         user=user,
         name=name,
         student_number=stud,
         gender=gender,
-        content=content
+        content=content 
     )
+
     return JsonResponse({'success': True, 'dorm': DormSerializer(dorm).data})
 
 @api_view(['POST'])

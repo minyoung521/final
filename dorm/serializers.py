@@ -5,13 +5,20 @@ from .models import (
 )
 
 class DormSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField(source='user.id', read_only=True)
-    username = serializers.CharField(source='user.username', read_only=True)
+    user_id   = serializers.IntegerField(source='user.id', read_only=True)
+    username  = serializers.CharField   (source='user.username', read_only=True)
+    content   = serializers.CharField(
+                  required=False,
+                  allow_blank=True,
+                  allow_null=True
+              )
     class Meta:
-        model = Dorm
-        fields = ['id','user_id','username','name','student_number',
-                  'content','gender','building_name','r_number',
-                  'position','is_available']
+        model  = Dorm
+        fields = [
+            'id','user_id','username','name','student_number',
+            'content','gender','building_name','r_number',
+            'position','is_available'
+        ]
 
 class OutingApplySerializer(serializers.ModelSerializer):
     status = serializers.CharField(read_only=True)

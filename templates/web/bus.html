@@ -91,14 +91,6 @@
         }
     }
 
-    .navbar-toggle,
-    .navbar-toggler {
-      pointer-events: none !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      display: none !important;
-    }
-
     .js-fh5co-nav-toggle {
       display: none !important;
     }
@@ -226,48 +218,97 @@
       <div id="map"></div>
     </div>
 
-   <script>
-     window.onload = function () {
-      const map = new kakao.maps.Map(document.getElementById("map"), {
-        center: new kakao.maps.LatLng(36.8514, 127.0615),
-        level: 7
-      });
-
-      const points = [
-        { lat: 36.8514, lng: 127.0615 }, // 출발 (중앙)
-        { lat: 36.8451, lng: 127.0512 },
-        { lat: 36.8268, lng: 127.0996 },
-        { lat: 36.8234, lng: 127.1210 },
-        { lat: 36.8257, lng: 127.1401 },
-        { lat: 36.8330, lng: 127.1473 },
-        { lat: 36.8187, lng: 127.1562 },
-        { lat: 36.7962, lng: 127.1021 }  // 도착
-      ];
-
-      // 마커 찍기
-      points.forEach(p => {
-        new kakao.maps.Marker({
-         map: map,
-         position: new kakao.maps.LatLng(p.lat, p.lng)
+    <script>
+      window.onload = function () {
+        const map = new kakao.maps.Map(document.getElementById("map"), {
+          center: new kakao.maps.LatLng(36.8514, 127.0615),
+          level: 7
         });
-      });
 
-      // 선을 구성할 좌표 배열
-      const linePath = points.map(p => new kakao.maps.LatLng(p.lat, p.lng));
+        const points = [
+          { lat: 36.8521, lng: 127.0599, visible: true },   // 출발 (중앙)
+          { lat: 36.8521, lng: 127.0585, visible: false },
+          { lat: 36.8514, lng: 127.0558, visible: false },
+          { lat: 36.8508, lng: 127.0543, visible: false },
+          { lat: 36.8495, lng: 127.0516, visible: false },
+          { lat: 36.8482, lng: 127.0520, visible: false },
+          { lat: 36.8469, lng: 127.0521, visible: false },
+          { lat: 36.8451, lng: 127.0512, visible: true },
+          { lat: 36.8446, lng: 127.0534, visible: false },
+          { lat: 36.8423, lng: 127.0596, visible: false },
+          { lat: 36.8418, lng: 127.0624, visible: false },
+          { lat: 36.8414, lng: 127.0645, visible: false },
+          { lat: 36.8382, lng: 127.0739, visible: false },
+          { lat: 36.8371, lng: 127.0762, visible: false },
+          { lat: 36.8363, lng: 127.0778, visible: false },
+          { lat: 36.8342, lng: 127.0836, visible: false },
+          { lat: 36.8298, lng: 127.0938, visible: false },
+          { lat: 36.8284, lng: 127.0968, visible: false },
+          { lat: 36.8264, lng: 127.0997, visible: true },
+          { lat: 36.8262, lng: 127.1002, visible: false },
+          { lat: 36.8252, lng: 127.1024, visible: false },
+          { lat: 36.8242, lng: 127.1048, visible: false },
+          { lat: 36.8234, lng: 127.1071, visible: false },
+          { lat: 36.8229, lng: 127.1099, visible: false },
+          { lat: 36.8226, lng: 127.1149, visible: false },
+          { lat: 36.8227, lng: 127.1166, visible: false },
+          { lat: 36.8232, lng: 127.1211, visible: true },
+          { lat: 36.8236, lng: 127.1239, visible: false },
+          { lat: 36.8265, lng: 127.1329, visible: false },
+          { lat: 36.8258, lng: 127.1373, visible: false },
+          { lat: 36.8257, lng: 127.1401, visible: true },
+          { lat: 36.8252, lng: 127.1445, visible: false },
+          { lat: 36.8295, lng: 127.1451, visible: false },
+          { lat: 36.8332, lng: 127.1455, visible: false },
+          { lat: 36.8330, lng: 127.1473, visible: true },
+          { lat: 36.8319, lng: 127.1518, visible: false },
+          { lat: 36.8257, lng: 127.1529, visible: false },
+          { lat: 36.8209, lng: 127.1520, visible: false },
+          { lat: 36.8196, lng: 127.1516, visible: false },
+          { lat: 36.8186, lng: 127.1521, visible: false },
+          { lat: 36.8187, lng: 127.1562, visible: true },
+          { lat: 36.8188, lng: 127.1581, visible: false },
+          { lat: 36.8124, lng: 127.1583, visible: false },
+          { lat: 36.8063, lng: 127.1586, visible: false },
+          { lat: 36.7986, lng: 127.1592, visible: false },
+          { lat: 36.7983, lng: 127.1509, visible: false },
+          { lat: 36.7986, lng: 127.1428, visible: false },
+          { lat: 36.7988, lng: 127.1353, visible: false },
+          { lat: 36.7978, lng: 127.1305, visible: false },
+          { lat: 36.7988, lng: 127.1292, visible: false },
+          { lat: 36.7999, lng: 127.1265, visible: false },
+          { lat: 36.8019, lng: 127.1122, visible: false },
+          { lat: 36.8009, lng: 127.1117, visible: false },
+          { lat: 36.7997, lng: 127.1104, visible: false },
+          { lat: 36.7983, lng: 127.1093, visible: false },
+          { lat: 36.7975, lng: 127.1081, visible: false },
+          { lat: 36.7972, lng: 127.1062, visible: false },
+          { lat: 36.7965, lng: 127.1021, visible: true }    // 도착
+        ];
 
-      // 선 생성
-      const polyline = new kakao.maps.Polyline({
-        path: linePath,
-        strokeWeight: 5,
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeStyle: 'solid'
-      });
+        points.forEach((p, i) => {
+          new kakao.maps.Marker({
+            map: p.visible ? map : null,
+            position: new kakao.maps.LatLng(p.lat, p.lng),
+            title: `지점 ${i + 1}`
+          });
+        });
 
-      // 지도에 선 표시
-      polyline.setMap(map);
-     };
-   </script>
+        const linePath = points.map(p => new kakao.maps.LatLng(p.lat, p.lng));
+
+        const polyline = new kakao.maps.Polyline({
+          path: linePath,
+          strokeWeight: 5,
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.8,
+          strokeStyle: 'solid'
+        });
+
+        polyline.setMap(map);
+      };
+    </script>
+
+
 
    <div class="table-responsive">
     <table class="table" id="dataset">

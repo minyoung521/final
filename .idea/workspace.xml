@@ -5,47 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1d6bfb6-d4da-4a90-a673-9f5f5f57fb08" name="변경" comment="final">
-      <change afterPath="$PROJECT_DIR$/finalproject/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/finalproject/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/form_errors.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/acc.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/apply_success.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/bus.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/check_in.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/community.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/community_confirm_delete.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/community_create.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/community_detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/community_home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/community_update.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/guide.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/info.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/inquiry_detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/menu.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/mypage.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/notice.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/notice_confirm_delete.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/notice_create.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/notice_detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/notice_update.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/outinfo.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/outside.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/rules.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/web/signup.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dorm/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/dorm/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dorm/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/dorm/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finalproject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalproject/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/web/bus.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/web/bus.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,11 +52,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\FinalProject\dorm" />
-      <recent name="C:\FinalProject\templates\web" />
-      <recent name="C:\FinalProject\templates" />
-      <recent name="C:\FinalProject\finalproject" />
       <recent name="C:\FinalProject\web" />
+      <recent name="C:\FinalProject\templates\web" />
+      <recent name="C:\FinalProject\finalproject" />
+      <recent name="C:\FinalProject\dorm" />
+      <recent name="C:\FinalProject\templates" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -179,7 +139,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752117635541</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="final">
+      <option name="closed" value="true" />
+      <created>1752140631065</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1752140631065</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

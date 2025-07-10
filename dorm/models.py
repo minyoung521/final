@@ -8,14 +8,13 @@ def post_image_path(instance, filename):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=100, blank=True, default="")  
+    full_name = models.CharField(max_length=100, blank=True, default="")
     department = models.CharField(max_length=50, blank=True, default="")
     reward_point = models.IntegerField(default=0)
     penalty_point = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.full_name or self.user.username} ({self.department})"
-
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -38,13 +37,24 @@ class Dorm(models.Model):
         return f"{self.name} - {self.student_number} - {self.gender}"
 
 class OutingApply(models.Model):
-    name = models.CharField(max_length=20)
-    student_number = models.CharField(max_length=10, unique=True)
-    out_date = models.DateField()
-    applied_at = models.DateTimeField(auto_now_add=True)
+    STATUS_CHOICES = [
+        ('pending',  'Standby'),
+        ('approved', 'approve'),
+        ('rejected', 'not approve'),
+    ]
+
+    name           = models.CharField(max_length=20)
+    student_number = models.CharField(max_length=10)
+    out_date       = models.DateField()
+    applied_at     = models.DateTimeField(auto_now_add=True)
+    status         = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='pending'
+    )
 
     def __str__(self):
-        return f"{self.name} - {self.student_number} - {self.out_date}"
+        return f"{self.name} - {self.student_number} - {self.out_date} ({self.get_status_display()})"
 
 class Inquiry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

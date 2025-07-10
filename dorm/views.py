@@ -28,7 +28,7 @@ from .serializers import (
     InquiryAnswerCreateSerializer,
 )
 from .permissions import IsAuthorOrAdmin, IsInquiryUserOrAdmin
-
+from datetime import date
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -59,7 +59,6 @@ def signup_api(request):
 
     return JsonResponse({'success': True, 'user_id': user.id})
 
-
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login_api(request):
@@ -79,7 +78,6 @@ def login_api(request):
         'token': token.key
     })
 
-
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -97,7 +95,6 @@ def mypage_api(request):
             'dorm': DormSerializer(dorm).data if dorm else None
         }
     })
-
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
@@ -123,7 +120,6 @@ def give_point_api(request):
     target.save()
     return JsonResponse({'success': True, 'profile': UserProfileSerializer(target).data})
 
-
 @api_view(['GET', 'POST'])
 @parser_classes([MultiPartParser, FormParser, JSONParser])
 def notices_api(request):
@@ -142,7 +138,6 @@ def notices_api(request):
         return JsonResponse({'success': False, 'error': serializer.errors}, status=400)
     notice = serializer.save()
     return JsonResponse({'success': True, 'notice': NoticeSerializer(notice).data})
-
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
@@ -169,23 +164,68 @@ def apply_dorm_api(request):
     )
     return JsonResponse({'success': True, 'dorm': DormSerializer(dorm).data})
 
-
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def apply_outing_api(request):
-    name = request.data.get('name')
-    stud = request.data.get('student_number')
+    name    = request.data.get('name')
+    stud    = request.data.get('student_number')
     outdate = request.data.get('out_date')
     if not all([name, stud, outdate]):
         return JsonResponse(
             {'success': False, 'error': 'Name, student number, and outing date are required.'},
             status=400
         )
-    if OutingApply.objects.filter(student_number=stud).exists():
-        return JsonResponse({'success': False, 'error': 'Outing application already exists.'}, status=400)
-    outing = OutingApply.objects.create(name=name, student_number=stud, out_date=outdate)
+    outing = OutingApply.objects.create(
+        name=name,
+        student_number=stud,
+        out_date=outdate
+    )
     return JsonResponse({'success': True, 'outing': OutingApplySerializer(outing).data})
 
 
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def outing_apply_status_api(request):
+    user = request.user
+    if user.is_staff:
+        applies = OutingApply.objects.all().order_by('-applied_at')
+    else:
+        applies = OutingApply.objects.filter(student_number=user.username).order_by('-applied_at')
+    serializer = OutingApplySerializer(applies, many=True)
+    return JsonResponse({'success': True, 'list': serializer.data})
+
+
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def approve_outing_api(request, pk):
+    if not request.user.is_staff:
+        return JsonResponse({'success': False, 'error': 'Permission denied.'}, status=403)
+    try:
+        outing = OutingApply.objects.get(pk=pk)
+    except OutingApply.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Not found.'}, status=404)
+    outing.status = 'approved'
+    outing.save()
+    return JsonResponse({'success': True, 'outing': OutingApplySerializer(outing).data})
+
+
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def reject_outing_api(request, pk):
+    if not request.user.is_staff:
+        return JsonResponse({'success': False, 'error': 'Permission denied.'}, status=403)
+    try:
+        outing = OutingApply.objects.get(pk=pk)
+    except OutingApply.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Not found.'}, status=404)
+    outing.status = 'rejected'
+    outing.save()
+    return JsonResponse({'success': True})
+    
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 @parser_classes([MultiPartParser, FormParser])

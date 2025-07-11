@@ -54,6 +54,43 @@
    <script src="{% static 'js/respond.min.js' %}"></script>
    <![endif]-->
 
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+   <![endif]-->
+   <style>
+    .admin-link {
+      margin-left: 12px;
+      border-radius: 6px;
+      background-color: #eab7b7;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .admin-link a {
+      display: inline-block;
+      padding: 8px 14px;
+      color: #6c757d;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    nav ul li.admin-link a {
+      color: #6c757d;
+    }
+
+    .admin-link i {
+      margin-right: 6px;
+      color: #495057;
+    }
+
+    .admin-link:hover {
+      background-color: #dee2e6;
+    }
+
+    .admin-link a:hover {
+      color: #0d6efd;
+    }
+   </style>
+
    </head>
    <body>
 
@@ -90,17 +127,26 @@
                      <li class="has-dropdown">
                         <a href="{% url 'web:guide' %}">생활관 안내</a>
                         <ul class="dropdown">
-                           {% if user.is_authenticated %}
-                           <li><a href="{% url 'web:check_in' %}">입실 신청</a></li>
-                           <li><a href="{% url 'web:outside' %}">외박 신청</a></li>
-                           <li><a href="{% url 'web:info' %}">생활관 안내</a></li>
-                           <li><a href="{% url 'web:rules' %}">생활관 규칙</a></li>
-                           {% else %}
-                           <li><a href="" onclick="alert('로그인이 필요한 페이지입니다.'); window.location.href='{% url 'web:login' %}'; return false;">입실 신청</a></li>
-                           <li><a href="" onclick="alert('로그인이 필요한 페이지입니다.'); window.location.href='{% url 'web:login' %}'; return false;">외박 신청</a></li>
-                           <li><a href="{% url 'web:info' %}">생활관 안내</a></li>
-                           <li><a href="{% url 'web:rules' %}">생활관 규칙</a></li>
-                           {% endif %}
+                          {% if user.is_authenticated %}
+                            {% if user.is_staff %}
+                              <li><a href="{% url 'web:dorminfo' %}">입실 신청 관리</a></li>
+                            {% else %}
+                              <li><a href="{% url 'web:check_in' %}">입실 신청</a></li>
+                            {% endif %}
+                            {% if user.is_staff %}
+                              <li><a href="{% url 'web:outside_manage' %}">외박 신청 관리</a></li>
+                            {% else %}
+                              <li><a href="{% url 'web:outside' %}">외박 신청</a></li>
+                            {% endif %}
+
+                            <li><a href="{% url 'web:info' %}">생활관 안내</a></li>
+                            <li><a href="{% url 'web:rules' %}">생활관 규칙</a></li>
+                          {% else %}
+                            <li><a href="" onclick="alert('로그인이 필요한 페이지입니다.'); window.location.href='{% url 'web:login' %}'; return false;">입실 신청</a></li>
+                            <li><a href="" onclick="alert('로그인이 필요한 페이지입니다.'); window.location.href='{% url 'web:login' %}'; return false;">외박 신청</a></li>
+                            <li><a href="{% url 'web:info' %}">생활관 안내</a></li>
+                            <li><a href="{% url 'web:rules' %}">생활관 규칙</a></li>
+                          {% endif %}
                         </ul>
                      </li>
                      <li class="has-dropdown">
@@ -122,6 +168,14 @@
                            <a href="" onclick="alert('로그인이 필요한 페이지입니다.'); window.location.href='{% url 'web:login' %}'; return false;">마이페이지</a>
                         {% endif %}
                      </li>
+                      {% if request.user.is_superuser %}
+                        <li class="nav-item admin-link">
+                          <a href="http://43.202.118.147:8000/admin/" target="_blank">
+                            <i class="fas fa-user-shield"></i> 관리자
+                          </a>
+                        </li>
+                        <li><span class="icon"><i class="icon-arrow-forward-outline"></i></span></li>
+                      {% endif %}
                      {% if user.is_authenticated %}
                     <li class="btn-cta" style="margin-right: 10px;">
                        <span class="btn-cta">{{ user.userprofile.full_name|default:user.username }}님, 환영합니다!</span>

@@ -128,6 +128,12 @@
     </div>
 
     <div class="form-group mb-3">
+          <label for="phone_number">전화번호</label>
+          <input type="text" class="form-control" name="phone_number" id="phone_number"
+                 value="{{ form.phone_number.value|default_if_none:'' }}" required>
+    </div>
+
+    <div class="form-group mb-3">
       <label for="email">이메일</label>
       <input type="email" class="form-control" name="email" id="email"
              value="{{ form.email.value|default_if_none:'' }}" required>
@@ -135,6 +141,14 @@
 
     <button type="submit" class="btn btn-join">생성하기</button>
   </form>
+
+  {% if messages %}
+  <script>
+    {% for message in messages %}
+      alert("{{ message }}");
+    {% endfor %}
+  </script>
+{% endif %}
 
 </div>
 

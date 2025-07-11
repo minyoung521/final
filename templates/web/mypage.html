@@ -90,39 +90,68 @@
     }
     table tbody tr:hover {
       background-color: #f1f9ff;
-      cursor: pointer;
+      cursor: default;
     }
 
     form {
       margin-bottom: 30px;
     }
-    form .form-group {
-      margin-bottom: 15px;
+
+    /* 검색폼 새 디자인 */
+    .search-form {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 30px;
     }
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
-      padding: 10px 25px;
-      font-size: 1.2rem;
-      transition: background-color 0.3s, border-color 0.3s;
-      font-weight: 600;
-      border-radius: 5px;
+
+    .search-form input[type="text"] {
+      flex: 1;
+      padding: 10px 15px;
+      border: 2px solid #007bff;
+      border-radius: 6px;
+      font-size: 1.4rem;
+      transition: border-color 0.3s ease;
     }
-    .btn-primary:hover {
-      background-color: #0056b3;
-      border-color: #004085;
-    }
-    .form-control {
-      border-radius: 4px;
-      border: 1px solid #ced4da;
-      padding: 10px 12px;
-      font-size: 1rem;
-      transition: border-color 0.3s;
-    }
-    .form-control:focus {
-      border-color: #80bdff;
-      box-shadow: 0 0 5px rgba(0,123,255,.5);
+
+    .search-form input[type="text"]:focus {
+      border-color: #0056b3;
       outline: none;
+      box-shadow: 0 0 8px rgba(0, 86, 179, 0.5);
+    }
+
+    .search-select {
+      padding: 10px 15px;
+      border: 2px solid #007bff;
+      border-radius: 6px;
+      font-size: 1.4rem;
+      background-color: white;
+      color: #333;
+      transition: border-color 0.3s ease;
+      cursor: pointer;
+      min-width: 140px;
+    }
+
+    .search-select:focus {
+      border-color: #0056b3;
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 86, 179, 0.5);
+    }
+
+    .btn-search {
+      padding: 10px 30px;
+      background-color: #007bff;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-search:hover {
+      background-color: #0056b3;
     }
 
     .container {
@@ -146,6 +175,9 @@
       <div class="tab-buttons">
         <button onclick="showTab('info', event)" class="active">내 정보</button>
         <button onclick="showTab('inquiry', event)">문의하기</button>
+        {% if is_admin %}
+          <button onclick="showTab('search', event)">검색</button>
+        {% endif %}
       </div>
 
       <div id="info" class="tab-content active">
@@ -154,6 +186,7 @@
           <tr><th>이름</th><td>{{ user.userprofile.full_name }}</td></tr>
           <tr><th>학번</th><td>{{ user.username }}</td></tr>
           <tr><th>학과</th><td>{{ user.userprofile.department }}</td></tr>
+          <tr><th>전화 번호</th><td>{{ user.userprofile.phone_number }}</td></tr>
           <tr><th>현재 상점</th><td>{{ user.userprofile.reward_point }}</td></tr>
           <tr><th>현재 벌점</th><td>{{ user.userprofile.penalty_point }}</td></tr>
           <tr><th>관 호실</th>
@@ -165,7 +198,6 @@
               {% endif %}
             </td>
           </tr>
-
         </table>
         {% if is_admin %}
         <div class="text-start">
@@ -174,10 +206,29 @@
         {% endif %}
       </div>
 
-
       <div id="inquiry" class="tab-content">
         {% if is_admin %}
           <h2>모든 문의 내역</h2>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for inquiry in inquiries %}
+                <tr onclick="window.location.href='{% url 'web:inquiry_detail' inquiry.pk %}'" style="cursor:pointer;">
+                  <td>{{ inquiry.title }}</td>
+                  <td>{{ inquiry.user.username }}</td>
+                  <td>{{ inquiry.created_at|date:"Y-m-d H:i" }}</td>
+                </tr>
+              {% empty %}
+                <tr><td colspan="3" class="text-center">문의 내역이 없습니다.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
         {% else %}
           <h2>문의하기</h2>
           <form method="post">
@@ -186,29 +237,89 @@
             <button type="submit" name="submit_inquiry" class="btn btn-primary">문의 등록</button>
           </form>
           <hr>
-        {% endif %}
-
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>제목</th>
-              <th>작성자</th>
-              <th>작성일</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for inquiry in inquiries %}
-              <tr onclick="window.location.href='{% url 'web:inquiry_detail' inquiry.pk %}'" style="cursor:pointer;">
-                <td>{{ inquiry.title }}</td>
-                <td>{{ inquiry.user.username }}</td>
-                <td>{{ inquiry.created_at|date:"Y-m-d H:i" }}</td>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>제목</th>
+                <th>작성일</th>
               </tr>
-            {% empty %}
-              <tr><td colspan="3" class="text-center">문의 내역이 없습니다.</td></tr>
-            {% endfor %}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {% for inquiry in inquiries %}
+                <tr onclick="window.location.href='{% url 'web:inquiry_detail' inquiry.pk %}'" style="cursor:pointer;">
+                  <td>{{ inquiry.title }}</td>
+                  <td>{{ inquiry.created_at|date:"Y-m-d H:i" }}</td>
+                </tr>
+              {% empty %}
+                <tr><td colspan="2" class="text-center">문의 내역이 없습니다.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
       </div>
+
+      <div id="search" class="tab-content {% if request.GET.field %}active{% endif %}">
+        {% if is_admin %}
+          <h2>학생 정보 검색</h2>
+          <form method="get" class="search-form">
+            <input type="text" name="query" placeholder="검색어 입력..." value="{{ request.GET.query }}">
+            <select name="field" class="search-select">
+              <option value="full_name" {% if request.GET.field == 'full_name' %}selected{% endif %}>이름</option>
+              <option value="student_number" {% if request.GET.field == 'student_number' %}selected{% endif %}>학번</option>
+              <option value="department" {% if request.GET.field == 'department' %}selected{% endif %}>학과</option>
+              <option value="phone_number" {% if request.GET.field == 'phone_number' %}selected{% endif %}>전화 번호</option>
+              <option value="building_name" {% if request.GET.field == 'building_name' %}selected{% endif %}>건물명</option>
+              <option value="r_number" {% if request.GET.field == 'r_number' %}selected{% endif %}>호수 </option>
+              <option value="gender" {% if request.GET.field == 'gender' %}selected{% endif %}>성별</option>
+            </select>
+            <button type="submit" class="btn-search">검색</button>
+          </form>
+
+          <table class="table table-bordered mt-3">
+            <thead>
+              <tr>
+                <th>이름</th>
+                <th>학번</th>
+                <th>학과</th>
+                <th>전화 번호</th>
+                <th>상점</th>
+                <th>벌점</th>
+                <th>건물명</th>
+                <th>호수 번호</th>
+                <th>성별</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for student in students %}
+                {% with dorm=student.user.dorm %}
+                  <tr>
+                    <td>{{ student.full_name }}</td>
+                    <td>{{ student.user.username }}</td>
+                    <td>{{ student.department }}</td>
+                    <td>{{ student.phone_number }}</td>
+                    <td>{{ student.reward_point }}</td>
+                    <td>{{ student.penalty_point }}</td>
+                    <td>{% if dorm %}{{ dorm.building_name }}{% else %}-{% endif %}</td>
+                    <td>{% if dorm %}{{ dorm.r_number }}{% else %}-{% endif %}</td>
+                    <td>
+                      {% if dorm %}
+                        {% if dorm.gender == 'male' %}남자{% elif dorm.gender == 'female' %}여자{% else %}-{% endif %}
+                      {% else %}
+                        -
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endwith %}
+              {% empty %}
+                <tr>
+                  <td colspan="6" class="text-center">검색 결과가 없습니다.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+      </div>
+
       <div class="text-end mt-4">
         <a href="{% url 'web:home' %}" class="btn btn-primary" style="font-size: 1.2rem">홈으로 가기</a>
       </div>
@@ -238,6 +349,15 @@
       document.getElementById(tabId).classList.add('active');
       if(event) event.currentTarget.classList.add('active');
     }
+
+    // 페이지 로드 시, URL 쿼리 파라미터에 따라 탭 활성화 유지 (옵션)
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('query') || urlParams.has('field')) {
+        // 검색 탭 활성화
+        showTab('search');
+      }
+    });
   </script>
 
 </body>

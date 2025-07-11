@@ -61,7 +61,7 @@
    </head>
 
 <body>
-	<div id="page">
+   <div id="page">
 <nav class="fh5co-nav" role="navigation">
       <div class="top">
          <div class="container">
@@ -149,19 +149,32 @@
       </div>
    </nav>
 
-      <div class="container mt-5">
-          <h2>{{ notice.title }}</h2>
-          <p><strong>작성일:</strong> {{ notice.date }}</p>
-          <hr>
-          <p>{{ notice.content|linebreaks }}</p>
-         <div class="text-end mt-4">
-           <a href="{% url 'web:notice' %}" class="btn btn-secondary">목록으로</a>
+    <div class="container mt-5">
+        <div class="bg-secondary bg-opacity-10 p-4 rounded shadow-sm">
+            <h2 class="mb-3">제목: {{ notice.title }}</h2>
+            <p class="text-muted text-end mb-3"><strong>작성일:</strong> {{ notice.date }}</p>
+            <hr class="my-4 border-dark">
+            <div class="mb-4">
+                { 내용 } {{ notice.content|linebreaks }}
+            </div>
 
-           {% if user.is_staff %}
-             <a href="{% url 'web:notice_update' notice.id %}" class="btn btn-primary ms-2">수정하기</a>
-           {% endif %}
-         </div>
-      </div>
+            {% if notice.image %}
+            <hr class="my-4">
+            <div class="text-center mt-3">
+                <img src="{{ notice.image.url }}" alt="공지 이미지" class="img-fluid" style="max-width: 100%; height: auto;">
+            </div>
+            {% endif %}
+
+            <hr class="my-4">
+            <div class="text-end mt-4">
+                <a href="{% url 'web:notice' %}" class="btn btn-secondary">목록으로</a>
+                {% if user.is_staff %}
+                <a href="{% url 'web:notice_update' notice.id %}" class="btn btn-primary ms-2">수정하기</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
+
+</div>
 </body>
 </html>

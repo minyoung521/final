@@ -144,7 +144,7 @@ class UserAdminDetailSerializer(serializers.ModelSerializer):
     full_name    = serializers.CharField(source='userprofile.full_name', required=False, allow_blank=True)
     department   = serializers.CharField(source='userprofile.department', required=False, allow_blank=True)
     phone_number = serializers.CharField(source='userprofile.phone_number', required=False, allow_blank=True)
-    student_number = serializers.CharField(source='username')
+    student_number = serializers.CharField(source='username') 
     reward_point = serializers.IntegerField(source='userprofile.reward_point', required=False)
     penalty_point= serializers.IntegerField(source='userprofile.penalty_point', required=False)
 

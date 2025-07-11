@@ -92,7 +92,7 @@
                         <ul class="dropdown">
                            {% if user.is_authenticated %}
                            <li><a href="{% url 'web:check_in' %}">입실 신청</a></li>
-                           <li><a href="{% url 'web:outside' %}">외출/외박 신청</a></li>
+                           <li><a href="{% url 'web:outside' %}">외박 신청</a></li>
                            <li><a href="{% url 'web:info' %}">생활관 안내</a></li>
                            <li><a href="{% url 'web:rules' %}">생활관 규칙</a></li>
                            {% else %}
@@ -248,12 +248,11 @@
    </script>
    <script>
      document.getElementById("applyForm").addEventListener("submit", function(event) {
-      event.preventDefault(); 
+      event.preventDefault();
        alert("신청이 완료되었습니다.");
-       this.submit(); 
+       this.submit();
      });
    </script>
     </div>
    </body>
 </html>
-

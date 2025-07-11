@@ -112,8 +112,8 @@
 </head>
 
 <body>
-	<div id="page">
-<nav class="fh5co-nav" role="navigation">
+   <div id="page">
+    <nav class="fh5co-nav" role="navigation">
       <div class="top">
          <div class="container">
             <div class="row">
@@ -201,24 +201,45 @@
    </nav>
 
    <div class="container mt-5">
-       <!-- 게시글 내용 -->
-       <div class="post-content">
-           <h2>{{ post.title }}</h2>
-           <p><strong>작성자:</strong> {{ post.author.userprofile.full_name|default:post.author.username }}</p>
-           <p><strong>작성일:</strong> {{ post.created_at|date:"Y-m-d H:i" }}</p>
-           <hr>
-           <p>{{ post.content|linebreaks }}</p>
-           {% if post.image %}
-           <div class="text-center mt-3">
-               <img src="{{ post.image.url }}" alt="게시글 이미지" class="img-fluid" style="max-width: 100%; height: auto;">
-           </div>
-           {% endif %}
-
-           <div class="text-end mt-4">
-               <a href="{% url 'web:community_home' %}" class="btn btn-secondary">목록으로</a>
-               {% if user.is_authenticated and user == post.author %}
-               <a href="{% url 'web:community_update' post.id %}" class="btn btn-primary ms-2">수정하기</a>
+       <div class="bg-secondary bg-opacity-10 p-4 rounded shadow-sm">
+           <div class="post-content">
+               <h2>{{ post.title }}</h2>
+               <p class="text-end mb-3"><strong>작성일:</strong> {{ post.created_at|date:"Y-m-d H:i" }}</p>
+               <hr class="border-dark">
+               <p>{{ post.content|linebreaks }}</p>
+               {% if post.image %}
+               <div class="text-center mt-3">
+                   <img src="{{ post.image.url }}" alt="게시글 이미지" class="img-fluid" style="max-width: 100%; height: auto;">
+               </div>
                {% endif %}
+
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                      <h5 class="mb-0">
+                         <i class="fas fa-heart"></i> 좋아요 수
+                        <span class="badge bg-light text-dark"> {{ post.likes.count }}</span>
+                      </h5>
+                      <form method="post" action="{% url 'web:toggle_like' post.id %}">
+                        {% csrf_token %}
+                        {% if user.is_authenticated %}
+                          <button type="submit" class="btn {% if user in post.likes.all %}btn-danger{% else %}btn-outline-danger{% endif %}">
+                            <i class="fas fa-heart"></i> 좋아요 누르기
+                          </button>
+                        {% else %}
+                          <a href="{% url 'web:login' %}" class="btn btn-outline-secondary">
+                            로그인 후 좋아요
+                          </a>
+                        {% endif %}
+                      </form>
+                    </div>
+                  <div>
+                    <a href="{% url 'web:community_home' %}" class="btn btn-secondary">목록으로</a>
+                    {% if user.is_authenticated and user == post.author %}
+                      <a href="{% url 'web:community_update' post.id %}" class="btn btn-primary ms-2">수정하기</a>
+                    {% endif %}
+                  </div>
+                </div>
            </div>
        </div>
 

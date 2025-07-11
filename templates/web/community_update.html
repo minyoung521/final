@@ -61,7 +61,7 @@
    </head>
 
 <body>
-	<div id="page">
+   <div id="page">
 <nav class="fh5co-nav" role="navigation">
       <div class="top">
          <div class="container">
@@ -176,9 +176,11 @@
         <div class="mb-3">
           <label for="image" class="form-label">파일 첨부</label>
           <input type="file" class="form-control" id="image" name="image">
-          {% if form.image.errors %}
-            <div class="text-danger">{{ form.image.errors }}</div>
-          {% endif %}
+            {% if post.image %}
+              <p class="mt-2">현재 이미지: <br>
+                <img src="{{ post.image.url }}" style="max-width: 300px;" class="img-thumbnail mt-1">
+              </p>
+            {% endif %}
         </div>
 
         <div class="text-end">

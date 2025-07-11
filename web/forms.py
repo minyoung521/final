@@ -2,17 +2,18 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from dorm.models import Comment, Post, Inquiry, InquiryAnswer, OutingApply
+from dorm.models import Comment, Post, Inquiry, InquiryAnswer, OutingApply, Notice
 
 
 class CustomSignupForm(UserCreationForm):
     email = forms.EmailField(required=True)
     full_name = forms.CharField(required=True)
     department = forms.CharField(required=True)
+    phone_number = forms.CharField(required=True)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'full_name', 'department', 'password1', 'password2')
+        fields = ('username', 'email', 'full_name', 'department', 'phone_number', 'password1', 'password2')
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -91,4 +92,14 @@ class OutingApplyForm(forms.ModelForm):
         fields = ['name', 'student_number', 'out_date']
         widgets = {
             'out_date': forms.DateInput(attrs={'type': 'date'})
+        }
+
+class NoticeForm(forms.ModelForm):
+    class Meta:
+        model = Notice
+        fields = ['title', 'content', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }

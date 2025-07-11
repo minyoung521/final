@@ -150,8 +150,10 @@
 <div class="container" style="margin-top: 80px; min-height: 80vh;">
   <div class="row">
     <div class="col-md-8 col-md-offset-2" style="background-color: #fff; padding: 30px; border: 1px solid #ddd; border-radius: 6px;">
-      <h4 class="text-center mb-4">외출/외박 신청하기</h4>
-      <form method="POST" class="post-form" id="applyForm">
+      <h4 class="text-center mb-4">외박 신청하기</h4>
+      <form method="POST" action="{% url 'web:apply_outing' %}" class="post-form" id="applyForm">
+
+
         {% csrf_token %}
 
         <table class="table table-bordered bg-white">
@@ -241,6 +243,16 @@
         enableUtc: false
     });
    </script>
+
+   {% if messages %}
+  <script>
+    {% for message in messages %}
+      alert("{{ message }}");
+    {% endfor %}
+  </script>
+    {% endif %}
+
+
 
     </div>
    </body>

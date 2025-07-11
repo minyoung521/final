@@ -19,7 +19,9 @@ from dorm.views import (
     outing_apply_status_api,
     approve_outing_api,
     reject_outing_api,
-    like_post_api, 
+    like_post_api,
+    admin_user_detail_api,
+    user_search_list_api,
 )
 
 from django.conf import settings
@@ -45,11 +47,14 @@ urlpatterns = [
     path('api/notices/', notices_api, name='notices_api'),
     path('api/posts/', posts_api, name='posts_api'),
     path('api/posts/<int:pk>/', post_detail_api, name='post_detail_api'),
-    path('api/posts/<int:pk>/like/', like_post_api, name='like_post_api'),  
+    path('api/posts/<int:pk>/like/', like_post_api, name='like_post_api'),
     path('api/posts/<int:post_id>/comments/', comments_api, name='comments_api'),
 
     path('api/inquiries/', inquiries_api, name='inquiries_api'),
     path('api/inquiries/<int:pk>/', inquiry_detail_api, name='inquiry_detail_api'),
+
+    path('api/admin/user/<int:user_id>/', admin_user_detail_api, name='admin_user_detail_api'),
+    path('api/admin/user-search/', user_search_list_api, name='user_search_list_api'),
 
     path('', include('web.urls')),
 ]

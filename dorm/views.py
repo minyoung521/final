@@ -26,6 +26,7 @@ from .serializers import (
     InquiryCreateSerializer,
     InquiryAnswerSerializer,
     InquiryAnswerCreateSerializer,
+    UserAdminDetailSerializer,
 )
 from .permissions import IsAuthorOrAdmin, IsInquiryUserOrAdmin
 from datetime import date
@@ -33,31 +34,47 @@ from datetime import date
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup_api(request):
-    username   = request.data.get('username')
-    password   = request.data.get('password')
-    email      = request.data.get('email')
-    department = request.data.get('department', '')
-    full_name  = request.data.get('full_name', '')
-
+    username     = request.data.get('username')
+    password     = request.data.get('password')
+    email        = request.data.get('email')
+    department   = request.data.get('department', '')
+    full_name    = request.data.get('full_name', '')
+    phone_number = request.data.get('phone_number', '')
     if not all([username, password, email, full_name]):
-        return JsonResponse({'success': False, 'error': 'All fields are required.'}, status=400)
-
+        return JsonResponse(
+            {'success': False, 'error': 'All fields (username, password, email, full_name) are required.'},
+            status=400
+        )
     if User.objects.filter(username=username).exists():
-        return JsonResponse({'success': False, 'error': 'Username already exists.'}, status=400)
+        return JsonResponse(
+            {'success': False, 'error': 'Username already exists.'},
+            status=400
+        )
     if User.objects.filter(email=email).exists():
-        return JsonResponse({'success': False, 'error': 'Email already registered.'}, status=400)
-
+        return JsonResponse(
+            {'success': False, 'error': 'Email already registered.'},
+            status=400
+        )
     user = User.objects.create_user(username=username, password=password, email=email)
     profile, created = UserProfile.objects.get_or_create(
         user=user,
-        defaults={'department': department, 'full_name': full_name}
+        defaults={
+            'department': department,
+            'full_name': full_name,
+            'phone_number': phone_number
+        }
     )
     if not created:
-        profile.department = department
-        profile.full_name = full_name
+        profile.department   = department
+        profile.full_name    = full_name
+        profile.phone_number = phone_number
         profile.save()
 
-    return JsonResponse({'success': True, 'user_id': user.id})
+    return JsonResponse({
+        'success': True,
+        'user_id': user.id,
+        'phone_number': profile.phone_number
+    })
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -85,14 +102,15 @@ def mypage_api(request):
     user = request.user
     profile, _ = UserProfile.objects.get_or_create(user=user)
     dorm = Dorm.objects.filter(user=user).first()
+
     profile_data = UserProfileSerializer(profile).data
-    profile_data['is_staff'] = user.is_staff
-    profile_data['is_superuser'] = user.is_superuser
+    dorm_data    = DormSerializer(dorm).data if dorm else None
+
     return JsonResponse({
         'success': True,
         'mypage': {
             'user': profile_data,
-            'dorm': DormSerializer(dorm).data if dorm else None
+            'dorm': dorm_data
         }
     })
 
@@ -121,23 +139,30 @@ def give_point_api(request):
     return JsonResponse({'success': True, 'profile': UserProfileSerializer(target).data})
 
 @api_view(['GET', 'POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticatedOrReadOnly])
 @parser_classes([MultiPartParser, FormParser, JSONParser])
 def notices_api(request):
     if request.method == 'GET':
         notices = Notice.objects.order_by('-date')
-        return JsonResponse({'success': True, 'notices': NoticeSerializer(notices, many=True).data})
-    auth = TokenAuthentication()
-    auth_result = auth.authenticate(request)
-    if not auth_result:
+        data = NoticeSerializer(notices, many=True).data
+        return JsonResponse({'success': True, 'notices': data})
+
+    user = request.user
+    if not user or not user.is_authenticated:
         return JsonResponse({'success': False, 'error': 'Authentication required.'}, status=401)
-    user, _ = auth_result
     if not user.is_staff:
         return JsonResponse({'success': False, 'error': 'Permission denied.'}, status=403)
+
     serializer = NoticeCreateSerializer(data=request.data)
     if not serializer.is_valid():
         return JsonResponse({'success': False, 'error': serializer.errors}, status=400)
+
     notice = serializer.save()
-    return JsonResponse({'success': True, 'notice': NoticeSerializer(notice).data})
+    return JsonResponse({
+        'success': True,
+        'notice': NoticeSerializer(notice).data
+    })
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
@@ -410,3 +435,65 @@ def like_post_api(request, pk):
         like_obj.delete()
         return Response({'is_liked': False, 'like_count': post.likes.count()})
     return Response({'is_liked': True, 'like_count': post.likes.count()})
+    
+@api_view(['GET', 'PATCH', 'DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def admin_user_detail_api(request, user_id):
+    if not request.user.is_staff:
+        return Response({'success': False, 'error': 'Permission denied.'}, status=403)
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        return Response({'success': False, 'error': 'User not found.'}, status=404)
+
+    if request.method == 'GET':
+        serializer = UserAdminDetailSerializer(user)
+        return Response({'success': True, 'user': serializer.data})
+
+    elif request.method == 'PATCH':
+        serializer = UserAdminDetailSerializer(user, data=request.data, partial=True, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'success': True, 'user': serializer.data})
+        return Response({'success': False, 'error': serializer.errors}, status=400)
+
+    elif request.method == 'DELETE':
+        user.delete()
+        return Response({'success': True, 'message': 'User deleted.'}, status=204)
+        
+def user_search_list_api(request):
+    student_number_query = request.GET.get("student_number", "")
+    if not student_number_query:
+        return JsonResponse({"success": False, "error": "needs student parameter"})
+
+    user_profiles = UserProfile.objects.filter(user__username__icontains=student_number_query)
+    dorms = Dorm.objects.filter(student_number__icontains=student_number_query)
+
+    results = []
+
+    for profile in user_profiles:
+        full_name = profile.full_name or profile.user.get_full_name() or profile.user.username
+        results.append({
+            "id": profile.user.id,
+            "fullName": full_name,
+            "studentNumber": profile.user.username or "",
+            "department": profile.department or "",
+        })
+
+    dorm_user_ids = [profile.user.id for profile in user_profiles]
+    dorm_only = dorms.exclude(user__id__in=dorm_user_ids)
+
+    for dorm in dorm_only:
+        results.append({
+            "id": dorm.user.id if dorm.user else None,
+            "fullName": dorm.name or "",
+            "studentNumber": dorm.student_number or "",
+            "department": "",
+        })
+
+    return JsonResponse({
+        "success": True,
+        "users": results,
+        "error": None,
+    })

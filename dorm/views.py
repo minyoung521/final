@@ -12,7 +12,7 @@ from rest_framework.response import Response
 
 from .models import (
     Dorm, OutingApply, Notice, Post, Comment,
-    UserProfile, Inquiry, InquiryAnswer
+    UserProfile, Inquiry, InquiryAnswer, Like
 )
 from .serializers import (
     DormSerializer,
@@ -396,3 +396,17 @@ def dorm_application_detail_api(request, pk):
         dorm.delete()
         return JsonResponse({'success': True, 'message': 'Dorm application deleted.'})
 
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def like_post_api(request, pk):
+    try:
+        post = Post.objects.get(pk=pk)
+    except Post.DoesNotExist:
+        return Response({'success': False, 'error': 'Post not found'}, status=404)
+    user = request.user
+    like_obj, created = Like.objects.get_or_create(user=user, post=post)
+    if not created:
+        like_obj.delete()
+        return Response({'is_liked': False, 'like_count': post.likes.count()})
+    return Response({'is_liked': True, 'like_count': post.likes.count()})

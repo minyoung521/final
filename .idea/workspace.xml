@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1d6bfb6-d4da-4a90-a673-9f5f5f57fb08" name="변경" comment="final">
-      <change beforePath="$PROJECT_DIR$/templates/web/bus.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/web/bus.html" afterDir="false" />
-    </list>
+    <list default="true" id="c1d6bfb6-d4da-4a90-a673-9f5f5f57fb08" name="변경" comment="final" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -147,7 +145,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752140631065</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="final">
+      <option name="closed" value="true" />
+      <created>1752140649110</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1752140649110</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

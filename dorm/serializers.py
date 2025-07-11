@@ -1,12 +1,12 @@
 from rest_framework import serializers
 from .models import (
     Dorm, OutingApply, Notice, Post, Comment,
-    UserProfile, Inquiry, InquiryAnswer
+    UserProfile, Inquiry, InquiryAnswer, Like
 )
 
 class DormSerializer(serializers.ModelSerializer):
     user_id   = serializers.IntegerField(source='user.id', read_only=True)
-    username  = serializers.CharField   (source='user.username', read_only=True)
+    username  = serializers.CharField(source='user.username', read_only=True)
     content   = serializers.CharField(
                   required=False,
                   allow_blank=True,
@@ -58,17 +58,26 @@ class CommentSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 class PostSerializer(serializers.ModelSerializer):
-    author_id = serializers.IntegerField(source='author.id', read_only=True)
+    author_id  = serializers.IntegerField(source='author.id', read_only=True)
     anon_author = serializers.SerializerMethodField()
-    comments = CommentSerializer(many=True, read_only=True)
+    comments   = CommentSerializer(many=True, read_only=True)
+    like_count = serializers.IntegerField(source='likes.count', read_only=True)
+    is_liked   = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ['id','author_id','anon_author','title','content',
-                  'image','created_at','updated_at','comments']
+        fields = [
+            'id','author_id','anon_author','title','content',
+            'image','created_at','updated_at','comments',
+            'like_count','is_liked'
+        ]
 
     def get_anon_author(self, obj):
         return f"{obj.author.id%10000:04d}"
+
+    def get_is_liked(self, obj):
+        user = self.context['request'].user
+        return obj.likes.filter(user=user).exists()
 
     def create(self, validated_data):
         validated_data['author'] = self.context['request'].user

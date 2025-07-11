@@ -59,7 +59,7 @@
    <![endif]-->
 
 <style>
-   #map { height: 50vh; width: 100%; }
+   #map { height: 65vh; width: 100%; }
 
    .table {
       margin-top: 70px !important;
@@ -218,14 +218,106 @@
       <div id="map"></div>
     </div>
 
-    <script>
-      window.onload = function () {
-        const map = new kakao.maps.Map(document.getElementById("map"), {
-          center: new kakao.maps.LatLng(36.8514, 127.0615),
-          level: 7
-        });
+    <div class="container text-center mt-4 mb-3">
+      <button class="btn btn-secondary" onclick="showTable('terminal')">천안 터미널 방면</button>
+      <button class="btn btn-secondary" onclick="showTable('asan')">천안 아산역 방면</button>
+    </div>
 
-        const points = [
+    <div class="table-responsive" id="table-terminal">
+      <table class="table" id="dataset">
+            <thead>
+            <tr>
+                <th scope="col">셔틀 버스</th>
+                <th scope="col">천안 터미널</th>
+                <th scope="col">두정역</th>
+                <th scope="col">롯데마트</th>
+                <th scope="col">백석동</th>
+                <th scope="col">삼일아파트</th>
+                <th scope="col">학교 앞 삼거리</th>
+                <th scope="col">학교 도착</th>
+                <th scope="col"></th>
+                <th scope="col">학교 출발</th>
+                <th scope="col">학교 앞 삼거리</th>
+                <th scope="col">삼일아파트</th>
+                <th scope="col">백석동</th>
+                <th scope="col">롯데마트</th>
+                <th scope="col">두정역</th>
+                <th scope="col">천안 터미널</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>(1호차)</td><td>08:25</td><td>08:35</td><td>08:40</td><td>08:45</td><td>08:55</td><td>09:08</td><td>09:10</td><td></td><td>09:20</td><td>09:22</td><td>09:35</td><td>09:45</td><td>09:50</td><td>09:55</td><td>10:05</td></tr>
+            <tr><td>(2호차)</td><td>09:25</td><td>09:35</td><td>09:40</td><td>09:45</td><td>09:55</td><td>10:08</td><td>10:10</td><td></td><td>10:20</td><td>10:22</td><td>10:35</td><td>10:45</td><td>10:50</td><td>10:55</td><td>11:05</td></tr>
+            <tr><td>(1호차)</td><td>10:25</td><td>10:35</td><td>10:40</td><td>10:45</td><td>10:55</td><td>11:08</td><td>11:10</td><td></td><td>11:20</td><td>11:22</td><td>11:35</td><td>11:45</td><td>11:50</td><td>11:55</td><td>12:05</td></tr>
+            <tr><td>(2호차)</td><td>11:25</td><td>11:35</td><td>11:40</td><td>11:45</td><td>11:55</td><td>12:08</td><td>12:10</td><td></td><td>12:20</td><td>12:22</td><td>12:35</td><td>12:45</td><td>12:50</td><td>12:55</td><td>13:05</td></tr>
+            <tr><td>(1호차)</td><td>12:25</td><td>12:35</td><td>12:40</td><td>12:45</td><td>12:55</td><td>13:08</td><td>13:10</td><td></td><td>13:20</td><td>13:22</td><td>13:35</td><td>13:45</td><td>13:50</td><td>13:55</td><td>14:05</td></tr>
+            <tr><td>(2호차)</td><td>13:25</td><td>13:35</td><td>13:40</td><td>13:45</td><td>13:55</td><td>14:08</td><td>14:10</td><td></td><td>14:20</td><td>14:22</td><td>14:35</td><td>14:45</td><td>14:50</td><td>14:55</td><td>15:05</td></tr>
+            <tr><td>(1호차)</td><td>14:25</td><td>14:35</td><td>14:40</td><td>14:45</td><td>14:55</td><td>15:08</td><td>15:10</td><td></td><td>15:20</td><td>15:22</td><td>15:35</td><td>15:45</td><td>15:50</td><td>15:55</td><td>16:05</td></tr>
+            <tr><td>(2호차)</td><td>15:25</td><td>15:35</td><td>15:40</td><td>15:45</td><td>15:55</td><td>16:08</td><td>16:10</td><td></td><td>16:20</td><td>16:22</td><td>16:35</td><td>16:45</td><td>16:50</td><td>16:55</td><td>17:05</td></tr>
+            <tr><td>(1호차)</td><td>16:25</td><td>16:35</td><td>16:40</td><td>16:45</td><td>16:55</td><td>17:08</td><td>17:10</td><td></td><td>17:20</td><td>17:22</td><td>17:35</td><td>17:45</td><td>17:50</td><td>17:55</td><td>18:05</td></tr>
+            <tr><td>(2호차)</td><td>17:25</td><td>17:35</td><td>17:40</td><td>17:45</td><td>17:55</td><td>18:08</td><td>18:10</td><td></td><td>18:20</td><td>18:22</td><td>18:35</td><td>18:45</td><td>18:50</td><td>18:55</td><td>19:05</td></tr>
+            <tr><td>(1호차)</td><td>18:25</td><td>18:35</td><td>18:40</td><td>18:45</td><td>18:55</td><td>19:08</td><td>19:10</td><td></td><td>19:20</td><td>19:22</td><td>19:35</td><td>19:45</td><td>19:50</td><td>19:55</td><td>20:05</td></tr>
+            <tr><td>(2호차)</td><td>19:25</td><td>19:35</td><td>19:40</td><td>19:45</td><td>19:55</td><td>20:08</td><td>20:10</td><td></td><td>20:20</td><td>20:22</td><td>20:35</td><td>20:45</td><td>20:50</td><td>20:55</td><td>21:05</td></tr>
+            </tbody>
+      </table>
+    </div>
+
+    <div class="table-responsive" id="table-asan" style="display: none;">
+      <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">셔틀 버스</th>
+                <th scope="col">천안 아산역(KTX)</th>
+                <th scope="col">탕정역</th>
+                <th scope="col">동산2 교차로</th>
+                <th scope="col">학교 앞 삼거리</th>
+                <th scope="col">학교 도착</th>
+                <th scope="col"></th>
+                <th scope="col">학교 출발</th>
+                <th scope="col">학교 앞 삼거리</th>
+                <th scope="col">동산2 교차로</th>
+                <th scope="col">탕정역</th>
+                <th scope="col">천안 아산역(KTX)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>(3호차)</td><td>08:30</td><td>08:40</td><td>08:50</td><td>08:58</td><td>09:00</td><td></td><td>09:00</td><td>09:22</td><td>09:35</td><td>09:45</td><td>09:30</td></tr>
+            <tr><td>(3호차)</td><td>09:30</td><td>09:40</td><td>09:50</td><td>09:58</td><td>10:00</td><td></td><td>10:00</td><td>10:22</td><td>10:35</td><td>10:45</td><td>10:30</td></tr>
+            <tr><td>(3호차)</td><td>10:30</td><td>10:40</td><td>10:50</td><td>10:58</td><td>11:00</td><td></td><td>11:00</td><td>11:22</td><td>11:35</td><td>11:45</td><td>11:30</td></tr>
+            <tr><td>(3호차)</td><td>11:30</td><td>11:40</td><td>11:50</td><td>11:58</td><td>12:00</td><td></td><td>12:00</td><td>12:22</td><td>12:35</td><td>12:45</td><td>12:30</td></tr>
+            <tr><td>(3호차)</td><td><--</td><td>--</td><td>--</td><td>--</td><td>휴게</td><td></td><td>시간</td><td>--</td><td>--</td><td>--</td><td>--></td></tr>
+            <tr><td>(3호차)</td><td>13:30</td><td>13:40</td><td>13:50</td><td>13:58</td><td>14:00</td><td></td><td>14:00</td><td>14:22</td><td>14:35</td><td>14:45</td><td>14:30</td></tr>
+            <tr><td>(3호차)</td><td>14:30</td><td>14:40</td><td>14:50</td><td>14:58</td><td>15:00</td><td></td><td>15:00</td><td>15:22</td><td>15:35</td><td>15:45</td><td>15:30</td></tr>
+            <tr><td>(3호차)</td><td>15:30</td><td>15:40</td><td>15:50</td><td>15:58</td><td>16:00</td><td></td><td>16:00</td><td>16:22</td><td>16:35</td><td>16:45</td><td>16:30</td></tr>
+            <tr><td>(3호차)</td><td>16:30</td><td>16:40</td><td>16:50</td><td>16:58</td><td>17:00</td><td></td><td>17:00</td><td>17:22</td><td>17:35</td><td>17:45</td><td>17:30</td></tr>
+            <tr><td>(3호차)</td><td>17:30</td><td>17:40</td><td>17:50</td><td>17:58</td><td>18:00</td><td></td><td>18:00</td><td>18:22</td><td>18:35</td><td>18:45</td><td>18:30</td></tr>
+            <tr><td>(3호차)</td><td>18:30</td><td>18:40</td><td>18:50</td><td>18:58</td><td>19:00</td><td></td><td>19:00</td><td>19:22</td><td>19:35</td><td>19:45</td><td>19:30</td></tr>
+            <tr><td>(3호차)</td><td>19:30</td><td>19:40</td><td>19:50</td><td>19:58</td><td>20:00</td><td></td><td>20:00</td><td>20:22</td><td>20:35</td><td>20:45</td><td>20:30</td></tr>
+            </tbody>
+      </table>
+    </div>
+
+    <script>
+      function showTable(type) {
+        const terminal = document.getElementById("table-terminal");
+        const asan = document.getElementById("table-asan");
+
+        if (type === "terminal") {
+          terminal.style.display = "block";
+          asan.style.display = "none";
+        } else {
+          terminal.style.display = "none";
+          asan.style.display = "block";
+        }
+      }
+    </script>
+
+    <script>
+      let map;
+      let polyline;
+      let markers = [];
+
+      const terminalPoints = [
           { lat: 36.8521, lng: 127.0599, visible: true },   // 출발 (중앙)
           { lat: 36.8521, lng: 127.0585, visible: false },
           { lat: 36.8514, lng: 127.0558, visible: false },
@@ -266,38 +358,79 @@
           { lat: 36.8209, lng: 127.1520, visible: false },
           { lat: 36.8196, lng: 127.1516, visible: false },
           { lat: 36.8186, lng: 127.1521, visible: false },
-          { lat: 36.8187, lng: 127.1562, visible: true },
-          { lat: 36.8188, lng: 127.1581, visible: false },
-          { lat: 36.8124, lng: 127.1583, visible: false },
-          { lat: 36.8063, lng: 127.1586, visible: false },
-          { lat: 36.7986, lng: 127.1592, visible: false },
-          { lat: 36.7983, lng: 127.1509, visible: false },
-          { lat: 36.7986, lng: 127.1428, visible: false },
-          { lat: 36.7988, lng: 127.1353, visible: false },
-          { lat: 36.7978, lng: 127.1305, visible: false },
-          { lat: 36.7988, lng: 127.1292, visible: false },
-          { lat: 36.7999, lng: 127.1265, visible: false },
-          { lat: 36.8019, lng: 127.1122, visible: false },
-          { lat: 36.8009, lng: 127.1117, visible: false },
-          { lat: 36.7997, lng: 127.1104, visible: false },
-          { lat: 36.7983, lng: 127.1093, visible: false },
-          { lat: 36.7975, lng: 127.1081, visible: false },
-          { lat: 36.7972, lng: 127.1062, visible: false },
+          { lat: 36.8187, lng: 127.1562, visible: true }    // 도착
+      ];
+
+      const asanPoints = [
+          { lat: 36.8521, lng: 127.0599, visible: true },   // 출발 (중앙)
+          { lat: 36.8521, lng: 127.0585, visible: false },
+          { lat: 36.8514, lng: 127.0558, visible: false },
+          { lat: 36.8508, lng: 127.0543, visible: false },
+          { lat: 36.8495, lng: 127.0516, visible: false },
+          { lat: 36.8482, lng: 127.0520, visible: false },
+          { lat: 36.8469, lng: 127.0521, visible: false },
+          { lat: 36.8451, lng: 127.0512, visible: true },
+          { lat: 36.8446, lng: 127.0534, visible: false },
+          { lat: 36.8423, lng: 127.0596, visible: false },
+          { lat: 36.8418, lng: 127.0624, visible: false },
+          { lat: 36.8414, lng: 127.0645, visible: false },
+          { lat: 36.8382, lng: 127.0739, visible: false },
+          { lat: 36.8371, lng: 127.0762, visible: false },
+          { lat: 36.8363, lng: 127.0778, visible: false },
+          { lat: 36.8342, lng: 127.0836, visible: false },
+          { lat: 36.8298, lng: 127.0938, visible: false },
+          { lat: 36.8278, lng: 127.0920, visible: false },
+          { lat: 36.8238, lng: 127.0893, visible: false },
+          { lat: 36.8224, lng: 127.0887, visible: true },
+          { lat: 36.8203, lng: 127.0881, visible: false },
+          { lat: 36.8187, lng: 127.0885, visible: false },
+          { lat: 36.8175, lng: 127.0891, visible: false },
+          { lat: 36.8163, lng: 127.0890, visible: false },
+          { lat: 36.8157, lng: 127.0888, visible: false },
+          { lat: 36.8136, lng: 127.0867, visible: false },
+          { lat: 36.8123, lng: 127.0863, visible: false },
+          { lat: 36.8024, lng: 127.0864, visible: false },
+          { lat: 36.7996, lng: 127.0868, visible: false },
+          { lat: 36.7957, lng: 127.0875, visible: false },
+          { lat: 36.7897, lng: 127.0881, visible: false },
+          { lat: 36.7900, lng: 127.0900, visible: true },
+          { lat: 36.7905, lng: 127.0930, visible: false },
+          { lat: 36.7909, lng: 127.0941, visible: false },
+          { lat: 36.7912, lng: 127.0946, visible: false },
+          { lat: 36.7921, lng: 127.0955, visible: false },
+          { lat: 36.7947, lng: 127.0978, visible: false },
+          { lat: 36.7955, lng: 127.0988, visible: false },
+          { lat: 36.7959, lng: 127.0998, visible: false },
+          { lat: 36.7962, lng: 127.1010, visible: false },
           { lat: 36.7965, lng: 127.1021, visible: true }    // 도착
-        ];
+      ];
+
+      function drawMap(points) {
+        markers.forEach(marker => marker.setMap(null));
+        markers = [];
+
+        if (polyline) {
+          polyline.setMap(null);
+        }
+
+        const path = [];
 
         points.forEach((p, i) => {
-          new kakao.maps.Marker({
-            map: p.visible ? map : null,
-            position: new kakao.maps.LatLng(p.lat, p.lng),
-            title: `지점 ${i + 1}`
-          });
+          const latlng = new kakao.maps.LatLng(p.lat, p.lng);
+          path.push(latlng);
+
+          if (p.visible) {
+            const marker = new kakao.maps.Marker({
+              map: map,
+              position: latlng,
+              title: `지점 ${i + 1}`
+            });
+            markers.push(marker);
+          }
         });
 
-        const linePath = points.map(p => new kakao.maps.LatLng(p.lat, p.lng));
-
-        const polyline = new kakao.maps.Polyline({
-          path: linePath,
+        polyline = new kakao.maps.Polyline({
+          path: path,
           strokeWeight: 5,
           strokeColor: '#FF0000',
           strokeOpacity: 0.8,
@@ -305,50 +438,32 @@
         });
 
         polyline.setMap(map);
+      }
+
+      function showTable(type) {
+        const terminal = document.getElementById("table-terminal");
+        const asan = document.getElementById("table-asan");
+
+        if (type === "terminal") {
+          terminal.style.display = "block";
+          asan.style.display = "none";
+          drawMap(terminalPoints);
+        } else {
+          terminal.style.display = "none";
+          asan.style.display = "block";
+          drawMap(asanPoints);
+        }
+      }
+
+      window.onload = function () {
+        map = new kakao.maps.Map(document.getElementById("map"), {
+          center: new kakao.maps.LatLng(36.8251, 127.0981),
+          level: 7
+        });
+
+        drawMap(terminalPoints);
       };
     </script>
-
-
-
-   <div class="table-responsive">
-    <table class="table" id="dataset">
-      <thead>
-      <tr>
-         <th scope="col">천안 아산역 출발</th>
-         <th scope="col">천안 터미널</th>
-         <th scope="col">두정역</th>
-         <th scope="col">롯데마트</th>
-         <th scope="col">백석동</th>
-         <th scope="col">삼일아파트</th>
-         <th scope="col">학교 앞 삼거리</th>
-         <th scope="col">학교 도착</th>
-         <th scope="col"></th>
-         <th scope="col">학교 출발</th>
-         <th scope="col">학교 앞 삼거리</th>
-         <th scope="col">삼일아파트</th>
-         <th scope="col">백석동</th>
-         <th scope="col">롯데마트</th>
-         <th scope="col">두정역</th>
-         <th scope="col">천안 터미널</th>
-         <th scope="col">천안 아산역 도착</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr><td>(1호차) 08:05</td><td>08:25</td><td>08:35</td><td>08:40</td><td>08:45</td><td>08:55</td><td>09:08</td><td>09:10</td><td></td><td>09:20</td><td>09:22</td><td>09:35</td><td>09:45</td><td>09:50</td><td>09:55</td><td>10:05</td><td>10:25</td></tr>
-      <tr><td>(2호차) 09:05</td><td>09:25</td><td>09:35</td><td>09:40</td><td>09:45</td><td>09:55</td><td>10:08</td><td>10:10</td><td></td><td>10:20</td><td>10:22</td><td>10:35</td><td>10:45</td><td>10:50</td><td>10:55</td><td>11:05</td><td>11:25</td></tr>
-      <tr><td>(3호차) 10:05</td><td>10:25</td><td>10:35</td><td>10:40</td><td>10:45</td><td>10:55</td><td>11:08</td><td>11:10</td><td></td><td>11:20</td><td>11:22</td><td>11:35</td><td>11:45</td><td>11:50</td><td>11:55</td><td>12:05</td><td>12:25</td></tr>
-      <tr><td>(1호차) 11:05</td><td>11:25</td><td>11:35</td><td>11:40</td><td>11:45</td><td>11:55</td><td>12:08</td><td>12:10</td><td></td><td>12:20</td><td>12:22</td><td>12:35</td><td>12:45</td><td>12:50</td><td>12:55</td><td>13:05</td><td>13:25</td></tr>
-      <tr><td>(2호차) 12:05</td><td>12:25</td><td>12:35</td><td>12:40</td><td>12:45</td><td>12:55</td><td>13:08</td><td>13:10</td><td></td><td>13:20</td><td>13:22</td><td>13:35</td><td>13:45</td><td>13:50</td><td>13:55</td><td>14:05</td><td>14:25</td></tr>
-      <tr><td>(3호차) 13:05</td><td>13:25</td><td>13:35</td><td>13:40</td><td>13:45</td><td>13:55</td><td>14:08</td><td>14:10</td><td></td><td>14:20</td><td>14:22</td><td>14:35</td><td>14:45</td><td>14:50</td><td>14:55</td><td>15:05</td><td>15:25</td></tr>
-      <tr><td>(1호차) 14:05</td><td>14:25</td><td>14:35</td><td>14:40</td><td>14:45</td><td>14:55</td><td>15:08</td><td>15:10</td><td></td><td>15:20</td><td>15:22</td><td>15:35</td><td>15:45</td><td>15:50</td><td>15:55</td><td>16:05</td><td>16:25</td></tr>
-      <tr><td>(2호차) 15:05</td><td>15:25</td><td>15:35</td><td>15:40</td><td>15:45</td><td>15:55</td><td>16:08</td><td>16:10</td><td></td><td>16:20</td><td>16:22</td><td>16:35</td><td>16:45</td><td>16:50</td><td>16:55</td><td>17:05</td><td>17:25</td></tr>
-      <tr><td>(3호차) 16:05</td><td>16:25</td><td>16:35</td><td>16:40</td><td>16:45</td><td>16:55</td><td>17:08</td><td>17:10</td><td></td><td>17:20</td><td>17:22</td><td>17:35</td><td>17:45</td><td>17:50</td><td>17:55</td><td>18:05</td><td>18:25</td></tr>
-      <tr><td>(1호차) 17:05</td><td>17:25</td><td>17:35</td><td>17:40</td><td>17:45</td><td>17:55</td><td>18:08</td><td>18:10</td><td></td><td>18:20</td><td>18:22</td><td>18:35</td><td>18:45</td><td>18:50</td><td>18:55</td><td>19:05</td><td>19:25</td></tr>
-      <tr><td>(2호차) 18:05</td><td>18:25</td><td>18:35</td><td>18:40</td><td>18:45</td><td>18:55</td><td>19:08</td><td>19:10</td><td></td><td>19:20</td><td>19:22</td><td>19:35</td><td>19:45</td><td>19:50</td><td>19:55</td><td>20:05</td><td>20:25</td></tr>
-      <tr><td>(3호차) 19:05</td><td>19:25</td><td>19:35</td><td>19:40</td><td>19:45</td><td>19:55</td><td>20:08</td><td>20:10</td><td></td><td>20:20</td><td>20:22</td><td>20:35</td><td>20:45</td><td>20:50</td><td>20:55</td><td>21:05</td><td>21:25</td></tr>
-      </tbody>
-    </table>
-   </div>
    </div>
 
  <!--  Kakao 지도 API -->

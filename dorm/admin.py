@@ -8,6 +8,7 @@ from .models import (
     UserProfile,
     Inquiry,
     InquiryAnswer,
+    Like,
 )
 
 admin.site.register(Dorm)
@@ -18,3 +19,4 @@ admin.site.register(Comment)
 admin.site.register(UserProfile)
 admin.site.register(Inquiry)
 admin.site.register(InquiryAnswer)
+admin.site.register(Like)

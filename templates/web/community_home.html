@@ -57,6 +57,41 @@
    <script src="{% static 'js/respond.min.js' %}"></script>
    <![endif]-->
 
+    <style>
+        .page-link-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .page-link-wrapper a,
+        .page-link-wrapper span {
+            color: black;
+            text-decoration: none;
+            padding: 4px 8px;
+        }
+
+        .page-link-wrapper .current-page {
+            border: 1.5px solid black;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .page-link-wrapper .arrow {
+            border: 1px solid #ccc;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        .page-link-wrapper .arrow.disabled {
+            pointer-events: none;
+            opacity: 0.3;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -216,6 +251,30 @@
         <a href="{% url 'web:login' %}" class="btn btn-primary ms-2">글쓰기</a>
       {% endif %}
    </div>
+
+    <div class="page-link-wrapper">
+
+        {% if page_obj.has_previous %}
+            <a class="arrow" href="?page={{ page_obj.previous_page_number }}{% if kw %}&kw={{ kw }}{% endif %}">&lsaquo;</a>
+        {% else %}
+            <span class="arrow disabled">&lsaquo;</span>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if num == page_obj.number %}
+                <span class="current-page">{{ num }}</span>
+            {% else %}
+                <a href="?page={{ num }}{% if kw %}&kw={{ kw }}{% endif %}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a class="arrow" href="?page={{ page_obj.next_page_number }}{% if kw %}&kw={{ kw }}{% endif %}">&rsaquo;</a>
+        {% else %}
+            <span class="arrow disabled">&rsaquo;</span>
+        {% endif %}
+
+    </div>
 </div>
 
 <script src="{% static 'js/jquery.min.js' %}"></script>

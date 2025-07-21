@@ -9,6 +9,7 @@ from django.views.generic import TemplateView
 from dorm.models import Notice, UserProfile, Post, Comment, Inquiry, InquiryAnswer, Dorm, OutingApply, Like
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator
 
 from web.forms import CustomSignupForm, CommentForm, PostForm, InquiryForm, InquiryAnswerForm, OutingApplyForm, \
     NoticeForm
@@ -34,6 +35,16 @@ def mypage_view(request):
 
     form = InquiryForm()
     students = []
+
+    if request.method == 'POST':
+        form = InquiryForm(request.POST)
+        if form.is_valid():
+            inquiry = form.save(commit=False)
+            inquiry.user = user
+            inquiry.save()
+            return redirect('web:mypage') 
+    else:
+        form = InquiryForm()
 
     if is_admin and 'query' in request.GET and 'field' in request.GET:
         query = request.GET.get('query', '').strip()
@@ -122,7 +133,16 @@ def notice_list(request):
     if kw:
         notices = notices.filter(title__icontains=kw)
     notices = notices.order_by('-id')
-    return render(request, 'web/notice.html', {'notices': notices})
+
+    paginator = Paginator(notices, 10)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
+
+    return render(request, 'web/notice.html', {
+        'notices': page_obj,
+        'page_obj': page_obj,
+        'kw': kw,
+    })
 
 @login_required
 @user_passes_test(lambda u: u.is_staff)
@@ -274,16 +294,24 @@ def reject_outing(request, pk):
     outing.save()
     return redirect('web:outing_info')
 
-
+@login_required
+@user_passes_test(lambda u: u.is_staff)
 def community_home(request):
     kw = request.GET.get('kw', '')
-    posts = Post.objects.all()
+    post_list = Post.objects.all().order_by('-created_at')
 
     if kw:
-        posts = posts.filter(title__icontains=kw)
+        post_list = post_list.filter(title__icontains=kw)
 
-    posts = posts.order_by('-created_at')
-    return render(request, 'web/community_home.html', {'posts': posts})
+    paginator = Paginator(post_list, 10)  
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
+
+    return render(request, 'web/community_home.html', {
+        'posts': page_obj,
+        'page_obj': page_obj,
+        'kw': kw
+    })
 
 @login_required
 def community_create(request):
